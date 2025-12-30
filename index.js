@@ -8,18 +8,43 @@
 function format(seconds) {
   console.log(seconds);
 
-  // get minutes
-  const minutes = Math.floor(seconds / 60);
-  console.log(minutes);
-
-  // get hours
+  let remainingSeconds = seconds;
+  let minutes = 0;
   let hours = 0;
-  if (minutes > 59) {
+
+  if (seconds < 59) {
+    if (seconds < 10) {
+      return `0:0${seconds}`;
+    }
+    return `0:${seconds}`;
+  } else {
+    // get minutes
+    minutes = Math.floor(seconds / 60);
+    console.log(minutes);
+
+    // return minutes
+    if (minutes < 59) {
+      return `${minutes}:${seconds - minutes * 60}`;
+    }
+
     // get hours
-    hours = Math.floor(minutes / 60);
-    console.log(hours);
+    if (minutes > 59) {
+      // get hours
+      hours = Math.floor(minutes / 60);
+      console.log(hours);
+
+      // get remaining minutes
+      minutes = minutes - hours * 60;
+
+      // get remaining seconds
+      seconds =
+        parseInt(seconds) - parseInt(hours * 60 * 60) - parseInt(minutes * 60);
+      return `${hours}:${minutes > 9 ? minutes : '0' + minutes}:${seconds}`;
+    }
   }
 
+  console.log(minutes);
+  console.log(seconds);
   // to get minutes from seconds
   // seconds / 60
   // console.log( Math.floor(seconds /  60))
@@ -34,4 +59,5 @@ function format(seconds) {
   // return seconds;
 }
 
-format(4000);
+// format(4000)
+// format(99999)
